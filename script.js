@@ -8,23 +8,27 @@ var number = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var specialChar = ["!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
 
 function generatePassword() {
+  // Prompt User for password length
   var passwordLength = parseInt(prompt("How many characters do you need in your password?"));
 
+  // Validate the password length
   while (!passwordLength || passwordLength < 7 || passwordLength > 129) {
     if (!passwordLength) {
       passwordLength = parseInt(prompt("Please choose a number between 8 and 128"));
-    } else if (passwordLength <= 8) {
+    } else if (passwordLength < 7) {
       passwordLength = parseInt(prompt("Password must be at least 8 characters."));
-    } else if (passwordLength > 128) {
+    } else if (passwordLength > 129) {
       passwordLength = parseInt(prompt("Password can be a maximum of 128 characters."));
     }
   }
-
+  
+  // Confirm the password criteria
   var confirmLowerCase = confirm("Do you wish to include lowercase letters?");
   var confirmUpperCase = confirm("Do you wish to include uppercase letters?");
   var confirmNumber = confirm("Do you wish to include numbers?");
   var confirmSpecialChar = confirm("Do you wish to include special characters?");
 
+  // Validate at least one criteria selected
   while (
     confirmLowerCase === false &&
     confirmUpperCase === false &&
@@ -38,6 +42,7 @@ function generatePassword() {
     confirmSpecialChar = confirm("Do you wish to include special characters?");
   }
 
+  // Generate the available character pool
   var availableChars = [];
 
   if (confirmLowerCase) {
@@ -56,6 +61,7 @@ function generatePassword() {
     availableChars = availableChars.concat(specialChar);
   }
 
+  // Generate the password
   var password = "";
 
   for (var i = 0; i < passwordLength; i++) {
